@@ -1,18 +1,19 @@
 new Vue({
   el: '#app',
   data: {
+    apiPath:'https://course-ec-api.hexschool.io/api/',
     products: [],
     pagination: {},
     tempProduct: {
       imageUrl: [],
     },
-    isNew: false,
-    status: {
-      fileUploading: false,
-    },
+    // isNew: false,
+    // status: {
+    //   fileUploading: false,
+    // },
     user: {
       token: '',
-      uuid: '8db6e157-f1c7-4688-bf28-c4948d307e8e',
+      uuid: 'f8b5a05a-fd65-4097-8584-aa161833bcc1',
     },
   },
   created() {
@@ -28,8 +29,8 @@ new Vue({
   },
   methods: {
     // 取得產品資料
-    getProducts(page = 1) {
-      const api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/products?page=${page}`;
+    getProducts(num = 1) {
+      const api = `${this.apiPath}${this.user.uuid}/admin/ec/products?page=${num}`;
       //預設帶入 token
       axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
 
@@ -39,28 +40,28 @@ new Vue({
       });
     },
     // 開啟 Modal 視窗
-    openModal(isNew, item) {
-      switch (isNew) {
-        case 'new':
-          this.$refs.productModel.tempProduct = {
-            imageUrl: [],
-          };
-          this.isNew = true;
-          $('#productModal').modal('show');
-          break;
-        case 'edit':
-          this.tempProduct = Object.assign({}, item);
-          // 使用 refs 觸發子元件方法
-          this.$refs.productModel.getProduct(this.tempProduct.id);
-          this.isNew = false;
-          break;
-        case 'delete':
-          this.tempProduct = Object.assign({}, item);
-          $('#delProductModal').modal('show');
-          break;
-        default:
-          break;
-      }
-    },
+    // openModal(isNew, item) {
+    //   switch (isNew) {
+    //     case 'new':
+    //       this.$refs.productModel.tempProduct = {
+    //         imageUrl: [],
+    //       };
+    //       this.isNew = true;
+    //       $('#productModal').modal('show');
+    //       break;
+    //     case 'edit':
+    //       this.tempProduct = Object.assign({}, item);
+    //       // 使用 refs 觸發子元件方法
+    //       this.$refs.productModel.getProduct(this.tempProduct.id);
+    //       this.isNew = false;
+    //       break;
+    //     case 'delete':
+    //       this.tempProduct = Object.assign({}, item);
+    //       $('#delProductModal').modal('show');
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    // },
   },
 })
